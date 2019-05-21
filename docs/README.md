@@ -10,6 +10,7 @@ Enter in command terminal (make sure you have the lastest version of node or >v8
 ```bash
 npm i -g @loopback/cli
 ```
+## LoopBack CLI
 
 ### Generate new LoopBack project
 
@@ -27,7 +28,16 @@ code .
 npm start
 ```
 
-### Generate LoopBack Model
+## LoopBack Project Anatomy
+
+### TODO
+
+Make slides to go with a breif over view of files and what that do
+
+
+## Generate LoopBack Model 
+
+### Generate User Model
 
 Generate user model
 ```bash
@@ -88,7 +98,7 @@ Enter an empty property name when done
 
 Model user was created in src/models/
 ```
-### Anatomy of user model
+### Anatomy of User Model
 
 user.model.ts
 ```ts
@@ -135,6 +145,8 @@ notice it was added to src/models/index.ts
 ```ts
 export * from './user.model';
 ```
+
+## Add Datasource to LoopBack project
 
 ### Generate LoopBack Datasource files
 
@@ -206,9 +218,11 @@ export * from './db.datasource';
   }
 }
 ```
-### Generate Repository
+### Generate User Repository
 
-Generate Datasource
+### Generate User Repository
+
+generate user repository
 ```bash
 lb4 repository
 ? Please select the datasource DbDatasource
@@ -246,9 +260,11 @@ notice it was added to /src/repositories/index.ts
 export * from './user.repository';
 ```
 
-### Generate Controller
+## Generate User Controller
 
-Generate controller
+### Generate CRUD User Controller
+
+Generate user controller
 ```bash
 lb4 controller
 ? Controller class name: user
@@ -263,7 +279,7 @@ lb4 controller
 Controller user was created in src\controllers/
 ```
 
-### Anatomy of Controller
+### Anatomy of User Controller
 
 user.controller.ts
 ```ts
