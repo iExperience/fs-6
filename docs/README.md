@@ -2,11 +2,99 @@
 
 [[toc]]
 
+
+## Express
+
+### Generate package.json
+
+Create package.json
+```bash
+npm init
+```
+
+### Installation
+
+install express
+```bash
+npm install express --save
+```
+
+### Main app entry point - index.js
+
+index.js
+```js
+const express = require('express');
+
+const app = express();
+ 
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT,()=>console.log(`Server running on port ${PORT}`));
+```
+
+### Run server locally
+
+run server
+```bash
+node .
+```
+
+add run script to package.json 
+```json
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start"  : "node ."
+  }
+```
+
+run server
+```bash
+npm start
+```
+
+### Basic Route Handling - Hello World
+
+index.js
+```js
+const express = require('express');
+
+const app = express();
+
+app.get('/', (req,res) => {
+    res.send('<h1>Hello World!</h1>')
+});
+ 
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT,()=>console.log(`Server running on port ${PORT}`));
+```
+
+### Nodemon
+
+installing nodemon as dev dependacy
+```bash
+npm install -D nodemon
+```
+
+adding run script to package.json
+```json
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node .",
+    "dev": "nodemon"
+  }
+```
+
+Run server with nodemon
+```bash
+npm run dev
+```
+
 ## LoopBack
 
 ### Installation
 
-Enter in command terminal (make sure you have the lastest version of node or >v8)
+Install LoopBack
 ```bash
 npm i -g @loopback/cli
 ```
