@@ -136,7 +136,7 @@ Install fs
 npm install fs
 ```
 
-Add dumy data - ./data/data.json
+Add dumy data - ./src/data/data.json
 ```json
 {
   "users":[
