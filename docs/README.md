@@ -252,7 +252,7 @@ router.get("/:id", (req, res) => {
     var parseData = JSON.parse(data);
     const found = parseData.users.some(user => user.id === req.params.id);
     if (found) {
-      res.json(users.filter(user => user.id === req.params.id));
+      res.json(parseData.users.filter(user => user.id === req.params.id));
     } else {
       res.status(400).json({ msg: "User not found" });
     }
@@ -274,6 +274,13 @@ app.use("/api/users", require("./src/api/users-routes"));
 
 ### Create User
 
+index.js
+```js
+//Body Parser Middlware:
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+```
+
 user-routes.js
 ```js
 router.post("/", (req, res) => {
@@ -285,14 +292,21 @@ router.post("/", (req, res) => {
       error = true;
       throw err;
     } else {
-      var parseData = JSON.parse(data);
       var count = 0;
-      parseData.users.forEach(existingUser => {
-        if (existingUser.email === user.email) {
-          throw new Error("This email address already been used");
-        }
-        count++;
-      });
+
+      if (data.length > 0) {
+        var parseData = JSON.parse(data);
+        parseData.users.forEach(existingUser => {
+          if (existingUser.email === user.email) {
+            throw new Error("This email address already been used");
+          }
+          count++;
+        });
+      } else {
+        parseData = {
+          users: []
+        };
+      }
 
       const newUser = {
         id: (count + 1).toString(),
@@ -301,7 +315,7 @@ router.post("/", (req, res) => {
         cellPhone: user.cellPhone,
         email: user.email,
         password: user.password,
-        role: roles.USER
+        role: user.role
       };
 
       parseData.users.push(newUser);
@@ -319,7 +333,7 @@ router.post("/", (req, res) => {
     if (error) {
       res.status(400).json({ msg: errMsg });
     } else {
-      res.json(newUser);
+      res.json(user);
     }
   });
 });
@@ -337,9 +351,13 @@ router.post("/update", (req, res) => {
       error = true;
       throw err;
     } else {
-      var parseData = JSON.parse(data);
+      if (data.length > 0) {
+        var parseData = JSON.parse(data);
+      } else {
+        throw Error("No Users");
+      }
 
-      parseData.users = parseData.users.filter(user => {
+      parseData.users = parseData.users.filter(existingUser => {
         return existingUser.email !== user.email;
       });
 
@@ -350,7 +368,7 @@ router.post("/update", (req, res) => {
         cellPhone: user.cellPhone,
         email: user.email,
         password: user.password,
-        role: roles.USER
+        role: user.role
       };
 
       parseData.users.push(updateUser);
@@ -368,7 +386,7 @@ router.post("/update", (req, res) => {
     if (error) {
       res.status(400).json({ msg: err.msg });
     } else {
-      res.json(updateUser);
+      res.json(user);
     }
   });
 });
